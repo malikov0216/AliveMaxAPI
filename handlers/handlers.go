@@ -60,6 +60,7 @@ func (app *App) login(username, password string) {
 	}
 
 	response, err := client.PostForm(loginURL, data)
+	response.Close = true
 
 	if err != nil {
 		log.Fatalln(err)
@@ -119,7 +120,7 @@ func (app *App) getNextPage(i int) []Salary {
 		"SCROLL::PAGE": {strconv.Itoa(i)},
 	}
 	response, err := client.PostForm(baseURL+"/earnings", page)
-
+	response.Close = true
 	if err != nil {
 		log.Fatal("error", err)
 	}
